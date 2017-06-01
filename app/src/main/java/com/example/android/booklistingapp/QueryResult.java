@@ -10,12 +10,12 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -54,8 +54,8 @@ public class QueryResult extends AppCompatActivity implements LoaderCallbacks<Li
         booksImage.setVisibility(View.GONE);
 
         String passedTitle = getIntent().getStringExtra("Title");
-        searchEditText = (EditText) findViewById(R.id.search_edit_text);
-        searchEditText.setText(passedTitle);
+       /* searchEditText = (EditText) findViewById(R.id.search_edit_text);
+        searchEditText.setText(passedTitle);*/
 
         // Find a reference to the {@link ListView} in the layout
         ListView bookListView = (ListView) findViewById(R.id.list);
@@ -123,8 +123,24 @@ public class QueryResult extends AppCompatActivity implements LoaderCallbacks<Li
             mEmptyStateTextView.setText(R.string.no_internet_connection);
 
         }
+        final SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String text = searchView.getQuery().toString();
+                Intent i = new Intent(getApplicationContext(), QueryResult.class);
+                i.putExtra("Title", text);
+                startActivity(i);
+                return false;
+            }
 
-        ImageButton searchButton = (ImageButton) findViewById(R.id.search_button);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+  /*      ImageButton searchButton = (ImageButton) findViewById(R.id.search_button);
         //Set an onClickListener on the search button to allow the user to make anew search
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +150,7 @@ public class QueryResult extends AppCompatActivity implements LoaderCallbacks<Li
                 i.putExtra("Title", searchedBook);
                 startActivity(i);
             }
-        });
+        });*/
     }
 
     @Override

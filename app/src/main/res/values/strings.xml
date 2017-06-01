@@ -2,4 +2,5 @@
     <string name="app_name">Book Archive</string>
     <string name="no_internet_connection">No internet connection.</string>
     <string name="no_books">No books found. Make a new search by clicking the editable text view on the top.</string>
+    <string name="search_hint">Insert your book here</string>
 </resources>
